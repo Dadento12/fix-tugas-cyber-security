@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Form Enkripsi</title>
+</head>
+
+<body class="bg-gray-800 text-gray-300 min-h-screen flex justify-center items-center">
+  <form id="MyForm"
+    class="flex flex-col gap-4 p-6 bg-gray-900 rounded-xl w-full max-w-lg shadow-lg text-lg font-medium">
+    
+    <!-- Judul -->
+    <h1 class="text-2xl font-bold text-white text-center">Enkripsi Pesan 🔐</h1>
+
+    <!-- Jenis Enkripsi -->
+    <div>
+      <label for="enkripsi" class="block font-semibold mb-1">Pilih Jenis Enkripsi</label>
+      <select id="jenis-enkripsi"
+        class="rounded-md w-full h-10 bg-gray-600 focus:outline-none px-3">
+        <option value="tradisional">Tradisional</option>
+        <option value="modern">Modern</option>
+      </select>
+    </div>
+
+    <!-- Metode Enkripsi -->
+    <div>
+      <label for="metode-enkripsi" class="block font-semibold mb-1">Pilih Metode Enkripsi</label>
+      <div id="metode-enkripsi"
+        class="rounded-md w-full h-10 bg-gray-600 px-3 flex items-center">
+        Metode Enkripsi
+      </div>
+    </div>
+
+    <!-- Pesan -->
+    <div>
+      <label for="pesan" class="block font-semibold mb-1">Text</label>
+      <input type="text" id="pesan" placeholder="Masukan pesan disini!"
+        class="rounded-md w-full h-12 bg-gray-600 px-3 focus:outline-none" />
+    </div>
+    
+    <!-- Key untuk enkripsi -->
+    <div>
+      <label for="Key" class="block font-semibold mb-1">Text</label>
+      <input type="text" id="key" placeholder="Masukan key yang anda inginkan disini (optional)"
+        class="rounded-md w-full h-12 bg-gray-600 px-3 focus:outline-none" />
+    </div>
+
+    <!-- Hasil Enkripsi -->
+    <div>
+      <label for="hasil-enkripsi" class="block font-semibold mb-1">Hasil Enkripsi</label>
+      <div id="hasil-enkripsi"
+        class="rounded-md w-full h-12 bg-gray-600 px-3 py-2 font-mono text-green-400">
+        hasil enkripsi
+      </div>
+    </div>
+
+    <!-- Tombol Submit -->
+    <button type="submit"
+      class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-200">
+      🔒 Enkripsi
+    </button>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
