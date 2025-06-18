@@ -3,7 +3,7 @@ const jenisSelect   = document.getElementById('jenis-enkripsi');
 const metodeWrapper = document.getElementById('metode-enkripsi');
 const pesanInput    = document.getElementById('pesan');
 const hasilBox      = document.getElementById('hasil-enkripsi');
-
+const KeyEncrypt    = document.getElementById('key');
 /* map jenis → list metode */
 const methodMap = {
   tradisional: [
@@ -49,5 +49,31 @@ form.addEventListener('submit', (e) => {
   const jenis   = jenisSelect.value;
   const metode  = document.getElementById('metode-select').value;
   const pesan   = pesanInput.value.trim();
-  hasilBox.textContent = `(${jenis}‑${metode}) → ${pesan}`;
+  const key     = parseInt(KeyEncrypt.value);
+
+  if(metode === "caesar"){
+    hasilBox.textContent = Caesar(pesan, key);
+  } else {
+    hasilBox.textContent = `(${jenis}-${metode}) → ${pesan}`;
+  }
 });
+
+
+function Caesar(Pesan, shift = KeyEncrypt, decrypt = false){
+  const L = ((decrypt? -shift: shift) %  26 + 26) % 26;
+
+  return [ ...Pesan].map(ch => {
+    const code = ch.charCodeAt(0);
+
+    //Huruf besar A-Z
+    if(Pesan >= 65 && Pesan <= 90){
+      return string.fromCharCode(((code - 65 + 5 + L) % 26) + 65);
+    }
+    //Huruf kecil A-Z
+    if (code >= 97 && code <= 122) {
+      return String.fromCharCode(((code - 97 + L) % 26) + 97);
+    }
+    
+    return ch;
+  }).join('');
+}
