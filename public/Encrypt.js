@@ -44,36 +44,51 @@ jenisSelect.addEventListener('change', () => {
 });
 
 /* Melakukan handle submit tanpa reload halaman */
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const jenis   = jenisSelect.value;
   const metode  = document.getElementById('metode-select').value;
   const pesan   = pesanInput.value.trim();
-  const key     = parseInt(KeyEncrypt.value);
+  const key     = parseInt(KeyEncrypt.value, 10);
 
-  if(metode === "caesar"){
-    hasilBox.textContent = Caesar(pesan, key);
-  } else {
-    hasilBox.textContent = `(${jenis}-${metode}) → ${pesan}`;
+  try {
+    const req = await fetch('http://127.0.0.1:5000/api/encrypt', {
+      method : "POST",
+      headers : {
+        'Content-Type': 'application/json'
+      },
+      body :JSON.stringify({
+        'jenis-enkripsi'  : jenis,
+        'enkripsi'        : metode,
+        'pesan'           : pesan,
+        'key'             : key
+      })
+    });
+    if(!req.ok) throw new Error(`Server error ${res.status}`);
+    const data = await req.json();
+    hasilBox.textContent = data.hasil;
+  } catch (err){
+    console.error(err);
+    hasilBox.textContent = 'Terjadi kesalahan' + err.message;
   }
 });
 
 
-function Caesar(Pesan, shift = KeyEncrypt, decrypt = false){
-  const L = ((decrypt? -shift: shift) %  26 + 26) % 26;
+// function Caesar(Pesan, shift = KeyEncrypt, decrypt = false){
+//   const L = ((decrypt? -shift: shift) %  26 + 26) % 26;
 
-  return [ ...Pesan].map(ch => {
-    const code = ch.charCodeAt(0);
+//   return [ ...Pesan].map(ch => {
+//     const code = ch.charCodeAt(0);
 
-    //Huruf besar A-Z
-    if(Pesan >= 65 && Pesan <= 90){
-      return string.fromCharCode(((code - 65 + 5 + L) % 26) + 65);
-    }
-    //Huruf kecil A-Z
-    if (code >= 97 && code <= 122) {
-      return String.fromCharCode(((code - 97 + L) % 26) + 97);
-    }
+//     //Huruf besar A-Z
+//     if(Pesan >= 65 && Pesan <= 90){
+//       return string.fromCharCode(((code - 65 + 5 + L) % 26) + 65);
+//     }
+//     //Huruf kecil A-Z
+//     if (code >= 97 && code <= 122) {
+//       return String.fromCharCode(((code - 97 + L) % 26) + 97);
+//     }
     
-    return ch;
-  }).join('');
-}
+//     return ch;
+//   }).join('');
+// }
